@@ -28,7 +28,7 @@ audio{
         margin-left: auto;
         margin-right: auto;
         width: 100%;
-        height: 75vh;
+        height: auto;
     }
 
     audio{
@@ -38,10 +38,45 @@ audio{
     h1{
         text-align: center;
         font-size: 1.5rem;
+        color: white;
     }
     
     h2{
         text-align: center;
+        font-size: 1.5rem;
+        color: white;
+    }
+
+    body{
+        background-color: #000000;
+    }
+
+    .song-title {
+        /* font-size: 24px; */
+        color: white;
+        /* text-align: center;
+        margin-top: 10px;
+        font-family: 'Arial', sans-serif;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); */
+    }
+
+    #prevBtn{
+        margin-right: 10%;
         font-size: 1.4rem;
+        background-color: black;
+        color: white;
+    }
+
+    #playPauseBtn{
+        margin-right: 10%;
+        font-size: 1.4rem;
+        background-color: black;
+        color: white;
+    }
+
+    #nextBtn{
+        font-size: 1.4rem;
+        background-color: black;
+        color: white;
     }
 }
