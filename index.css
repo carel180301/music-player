@@ -1,0 +1,92 @@
+h1{
+    text-align: center;
+}
+
+h2{
+    text-align: center;
+}
+
+.audio_container{
+    text-align: center;
+}
+
+.image{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 25%;
+    height: auto;
+}
+
+audio{
+    width: 25%;
+}
+
+@media screen and (min-width: 376px) and (max-width: 426px) {
+    .image{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+        height: auto;
+    }
+
+    audio{
+        width: 100%;
+    }
+
+    h1{
+        text-align: center;
+        font-size: 1.5rem;
+        color: white;
+    }
+    
+    h2{
+        text-align: center;
+        font-size: 1.5rem;
+        color: white;
+    }
+
+    body{
+        background-color: #000000;
+        margin: 0;
+        padding: 0;
+    }
+
+    .song-title {
+        /* font-size: 24px; */
+        color: white;
+        /* text-align: center;
+        margin-top: 10px;
+        font-family: 'Arial', sans-serif;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); */
+    }
+
+    #prevBtn{
+        margin-right: 10%;
+        font-size: 1.4rem;
+        background-color: black;
+        color: white;
+    }
+
+    #playPauseBtn{
+        margin-right: 10%;
+        font-size: 1.4rem;
+        background-color: black;
+        color: white;
+    }
+
+    #nextBtn{
+        font-size: 1.4rem;
+        background-color: black;
+        color: white;
+    }
+
+    #seekbar{
+        width: 100%;
+    }
+
+    .controls{
+        margin-top: 5%;
+    }
+}
