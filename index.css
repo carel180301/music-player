@@ -28,7 +28,7 @@ audio{
         margin-left: auto;
         margin-right: auto;
         width: 100%;
-        height: 25vh;
+        height: 30vh;
     }
 
     audio{
@@ -39,12 +39,16 @@ audio{
         text-align: center;
         font-size: 1.5rem;
         color: white;
+        margin-left:10%;
+        margin-right:10%;
     }
     
     h2{
         text-align: center;
         font-size: 1.5rem;
         color: white;
+        margin-left: 10%;
+        margin-right: 10%;
     }
 
     body{
