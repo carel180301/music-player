@@ -49,8 +49,8 @@ audio{
 
     body{
         background-color: #000000;
-        padding:0;
-        margin:0;
+        margin: 0;
+        padding: 0;
     }
 
     .song-title {
@@ -80,5 +80,13 @@ audio{
         font-size: 1.4rem;
         background-color: black;
         color: white;
+    }
+
+    #seekbar{
+        width: 100%;
+    }
+
+    .controls{
+        margin-top: 5%;
     }
 }
