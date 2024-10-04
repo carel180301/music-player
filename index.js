@@ -1,28 +1,13 @@
 const songs = [
     {
-        title: "NMIXX - Break The Walls",
-        file: "Music/NMIXX - Break The Wall.mp3",
-        image: "Image/nmixx_for_break the wall.jpg"
-    },
-    {
-        title: "NMIXX - Moving On",
-        file: "Music/NMIXX - Moving On.mp3",
-        image: "Image/nmixx_for_moving on.jpg"
-    },
-    {
-        title: "BTS - Spring Day",
-        file: "Music/BTS-Spring Day.mp3",
-        image: "Image/bts_for_spring day.jpg"
-    },
-    {
         title: "BTS - Magic Shop",
         file: "Music/BTS - Magic Shop.mp3",
         image: "Image/bts_for_magic shop.jpg"
     },
     {
-        title: "Day6 - Happy",
-        file: "Music/DAY6 - HAPPY.mp3",
-        image: "Image/day6_for_happy.jpg"
+        title: "QWER - My Name is Malguem",
+        file: "Music/QWER - My Name is Malguem.mp3",
+        image: "Image/qwer_for_my name is.jpg"
     }
 ];
 
