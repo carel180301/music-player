@@ -1,10 +1,5 @@
 const songs = [
     {
-        title: "BTS - Magic Shop",
-        file: "Music/BTS - Magic Shop.mp3",
-        image: "Image/bts_for_magic shop.jpg"
-    },
-    {
         title: "QWER - My Name is Malguem",
         file: "Music/QWER - My Name is Malguem.mp3",
         image: "Image/qwer_for_my name is.jpg"
