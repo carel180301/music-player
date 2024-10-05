@@ -3,7 +3,12 @@ const songs = [
         title: "QWER - My Name is Malguem",
         file: "Music/QWER - My Name is Malguem.mp3",
         image: "Image/qwer_for_my name is.jpg"
-    }
+    },
+    {
+        title: "Kiss Of Life - R.E.M",
+        file: "Music/KISS OF LIFE - REM.mp3",
+        image: "Image/kof_for rem.jpg"
+    },
 ];
 
 let currentSongIndex = 0;
