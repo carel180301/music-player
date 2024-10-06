@@ -9,6 +9,11 @@ const songs = [
         file: "Music/KISS OF LIFE - REM.mp3",
         image: "Image/kof_for rem.jpg"
     },
+    {
+        title: "BTS - Spring Day",
+        file: "Music/BTS Spring Day.mp3",
+        image: "Image/bts_for_spring day.jpg"
+    }
 ];
 
 let currentSongIndex = 0;
