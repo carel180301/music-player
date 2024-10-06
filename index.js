@@ -11,7 +11,8 @@ const songs = [
     },
     {
         title: "BTS - Spring Day",
-        file: Music/BTS
+        file: "Music/BTS-Spring Day.mp3",
+        image: "Image/bts_for_spring day.jpg"
     }
 ];
 
