@@ -8,6 +8,10 @@ const songs = [
         title: "Kiss Of Life - R.E.M",
         file: "Music/KISS OF LIFE - REM.mp3",
         image: "Image/kof_for rem.jpg"
+    },
+    {
+        title: "BTS - Spring Day",
+        file: Music/BTS
     }
 ];
 
