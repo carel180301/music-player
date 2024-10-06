@@ -5,11 +5,6 @@ const songs = [
         image: "Image/qwer_for_my name is.jpg"
     },
     {
-        title: "BTS - Spring Day",
-        file: "Music/BTS Spring Day.mp3",
-        image: "Image/bts_for_spring day.jpg"
-    },
-    {
         title: "Day6 - Happy",
         file: "Music/DAY6 - HAPPY.mp3",
         image: "Image/day6_for_happy.jpg"
