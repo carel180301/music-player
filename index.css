@@ -28,7 +28,7 @@ audio{
         margin-left: auto;
         margin-right: auto;
         width: 100%;
-        height: 30vh;
+        height: 35vh;
     }
 
     audio{
@@ -93,4 +93,35 @@ audio{
     .controls{
         margin-top: 5%;
     }
+
+    .bi-caret-left-fill{
+        color: white;
+        background-color: white;
+    }
+
+    #backButton{
+        font-size: 3rem;
+        background-color: #000000;
+        color: white;
+        position: relative;
+        margin-left: 5%;
+        margin-top: 5%;
+        margin-bottom: 0%;
+        text-decoration: none;
+        border: none;
+        box-shadow: none;
+    }
+
+    #backButton:hover{
+        font-size: 3rem;
+        background-color: #000000;
+        color: #B2BEB5;
+        position: relative;
+        margin-left: 5%;
+        margin-top: 5%;
+        margin-bottom: 0%;
+        text-decoration: none;
+        border: none;
+        box-shadow: none;
+    }    
 }
