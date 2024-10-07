@@ -8,6 +8,11 @@ const songs = [
         title: "Day6 - Happy",
         file: "Music/DAY6 - HAPPY.mp3",
         image: "Image/day6_for_happy.jpg"
+    },
+    {
+        title: "NMIXX - Break The Wall",
+        file: "Music/NMIXX - Break The Wall.mp3",
+        image: "Image/nmixx_for_break the wall.jpg"
     }
 ];
 
@@ -30,7 +35,7 @@ function loadSong(songIndex) {
 // Update seek bar as the audio plays
 audioPlayer.addEventListener('timeupdate', () => {
     const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
-    seekBar.value = progress || 0;  // Prevent NaN at the beginning
+    seekBar.value = progress || 0;  
 });
 
 // Seek the song when scrubbing
@@ -67,12 +72,28 @@ prevBtn.addEventListener('click', () => {
 });
 
 // Autoplay next song when current one ends
+// audioPlayer.addEventListener('ended', () => {
+//     currentSongIndex = (currentSongIndex + 1) % songs.length;
+//     loadSong(currentSongIndex);
+//     audioPlayer.play();
+//     playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+// });
+
+// Autoplay next song when current one ends, but stop after the last song
 audioPlayer.addEventListener('ended', () => {
-    currentSongIndex = (currentSongIndex + 1) % songs.length;
-    loadSong(currentSongIndex);
-    audioPlayer.play();
-    playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+    if (currentSongIndex < songs.length - 1) {
+        currentSongIndex++;  // Move to the next song
+        loadSong(currentSongIndex);
+        audioPlayer.play();
+        playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+    } else {
+        // If it's the last song, stop the playback and reset the UI
+        audioPlayer.pause();
+        audioPlayer.currentTime = 0;  // Reset time to 0
+        playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+    }
 });
+
 
 // Initialize the first song
 loadSong(currentSongIndex);
