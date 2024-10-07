@@ -67,14 +67,15 @@ audio{
     }
 
     #prevBtn{
-        margin-right: 10%;
+        /* margin-right: 10%; */
         font-size: 1.4rem;
         background-color: black;
         color: white;
     }
 
     #playPauseBtn{
-        margin-right: 10%;
+        margin-right: 4%;
+        margin-left: 4%;
         font-size: 1.4rem;
         background-color: black;
         color: white;
@@ -84,6 +85,19 @@ audio{
         font-size: 1.4rem;
         background-color: black;
         color: white;
+    }
+
+    #shuffleBtn{
+        position: absolute;
+        right: 10%;
+        font-size: 1.4rem;
+        background-color: black;
+        color: white;
+    }
+
+    #shuffleBtn.active {
+        background-color: black;
+        color: #FF69B4;
     }
 
     #seekbar{
@@ -100,7 +114,7 @@ audio{
     }
 
     #backButton{
-        font-size: 3rem;
+        font-size: 2rem;
         background-color: #000000;
         color: white;
         position: relative;
@@ -113,9 +127,9 @@ audio{
     }
 
     #backButton:hover{
-        font-size: 3rem;
+        font-size: 2rem;
         background-color: #000000;
-        color: #B2BEB5;
+        color: gray;
         position: relative;
         margin-left: 5%;
         margin-top: 5%;
