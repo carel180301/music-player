@@ -1,28 +1,13 @@
 const songs = [
     {
-        title: "QWER - My Name is Malguem",
-        file: "Music/QWER - My Name is Malguem.mp3",
-        image: "Image/qwer_for_my name is.jpg"
-    },
-    {
-        title: "Day6 - Happy",
-        file: "Music/DAY6 - HAPPY.mp3",
-        image: "Image/day6_for_happy.jpg"
-    },
-    {
-        title: "NMIXX - Break The Wall",
-        file: "Music/NMIXX - Break The Wall.mp3",
-        image: "Image/nmixx_for_break the wall.jpg"
-    },
-    {
-        title: "NMIXX - Moving On",
-        file: "Music/NMIXX - Moving On.mp3",
-        image: "Image/nmixx_for_moving on.jpg"
-    },
-    {
         title: "Kiss Of Life - R.E.M",
         file: "Music/KISS OF LIFE - REM.mp3",
         image: "Image/kof_for rem.jpg"
+    },
+    {
+        title: "BTS - Magic Shop",
+        file: "Music/BTS - Magic Shop.mp3",
+        image: "Image/bts_for_magic shop.jpg"
     }
 ];
 
@@ -110,7 +95,7 @@ nextBtn.addEventListener('click', () => {
 });
 
 
-// Play the previous song
+// Play the previous song or restart the current one depending on the time played
 prevBtn.addEventListener('click', () => {
     if (isReplay) {
         audioPlayer.currentTime = 0;
@@ -118,25 +103,32 @@ prevBtn.addEventListener('click', () => {
         return;
     }
 
-    if (isShuffle) {
-        // If there's only one song in history, don't allow going back
-        if (songHistory.length > 1) {
-            songHistory.pop();  // Remove the current song from history
-            currentSongIndex = songHistory[songHistory.length - 1];  // Set current to the last played
+    // Check if more than 3 seconds have passed in the current song
+    if (audioPlayer.currentTime > 3) {
+        // If more than 3 seconds have passed, just reset the current song
+        audioPlayer.currentTime = 0;
+        audioPlayer.play();
+    } else {
+        // If less than 3 seconds, go to the previous song
+        if (isShuffle) {
+            // If there's only one song in history, don't allow going back
+            if (songHistory.length > 1) {
+                songHistory.pop();  // Remove the current song from history
+                currentSongIndex = songHistory[songHistory.length - 1];  // Set current to the last played
+                loadSong(currentSongIndex);
+                audioPlayer.play();
+                playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            }
+        } else {
+            // Regular (non-shuffle) mode: go to the previous song
+            currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
             loadSong(currentSongIndex);
             audioPlayer.play();
             playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
         }
-        // Do nothing if there's no song to go back to in shuffle mode
-        return;
     }
-
-    // Regular (non-shuffle) mode: go to the previous song
-    currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
-    loadSong(currentSongIndex);
-    audioPlayer.play();
-    playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
 });
+
 
 
 
@@ -198,4 +190,38 @@ seekBar.addEventListener('input', () => {
     const seekTime = (seekBar.value / 100) * audioPlayer.duration;  // Calculate the new time
     audioPlayer.currentTime = seekTime;  // Update the audio's current time
 });
+
+
+const currentTimeEl = document.getElementById('currentTime');
+const totalDurationEl = document.getElementById('totalDuration');
+
+// Function to format seconds into MM:SS
+function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+}
+
+// Update total duration when metadata is loaded
+audioPlayer.addEventListener('loadedmetadata', () => {
+    totalDurationEl.innerText = formatTime(audioPlayer.duration);
+});
+
+// Update current time as the song plays
+audioPlayer.addEventListener('timeupdate', () => {
+    currentTimeEl.innerText = formatTime(audioPlayer.currentTime);
+    
+    // Update seekbar based on current time
+    if (audioPlayer.duration) {
+        const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+        seekBar.value = progress;
+    }
+});
+
+// Allow the user to seek the song by clicking on the seekbar
+seekBar.addEventListener('input', () => {
+    const seekTime = (seekBar.value / 100) * audioPlayer.duration;  // Calculate the new time
+    audioPlayer.currentTime = seekTime;  // Update the audio's current time
+});
+
 
