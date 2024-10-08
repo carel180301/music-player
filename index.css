@@ -113,6 +113,19 @@ audio{
         background-color: white;
     }
 
+    #replayBtn{
+        position: absolute;
+        left: 10%;
+        font-size: 1.4rem;
+        background-color: black;
+        color: white;
+    }
+
+    #replayBtn.active{
+        background-color: black;
+        color: #FF69B4;
+    }
+
     #backButton{
         font-size: 2rem;
         background-color: #000000;
@@ -120,7 +133,7 @@ audio{
         position: relative;
         margin-left: 5%;
         margin-top: 5%;
-        margin-bottom: 0%;
+        margin-bottom: 5%;
         text-decoration: none;
         border: none;
         box-shadow: none;
@@ -133,7 +146,7 @@ audio{
         position: relative;
         margin-left: 5%;
         margin-top: 5%;
-        margin-bottom: 0%;
+        margin-bottom: 5%;
         text-decoration: none;
         border: none;
         box-shadow: none;
