@@ -18,15 +18,23 @@ const songs = [
         title: "NMIXX - Moving On",
         file: "Music/NMIXX - Moving On.mp3",
         image: "Image/nmixx_for_moving on.jpg"
+    },
+    {
+        title: "Kiss Of Life - R.E.M",
+        file: "Music/KISS OF LIFE - REM.mp3",
+        image: "Image/kof_for rem.jpg"
     }
 ];
+
 
 let currentSongIndex = 0;
 let isShuffle = false;  // Shuffle mode flag
 let shuffleQueue = [];  // To store shuffled songs order
 let songHistory = [];   // To track played songs for shuffle mode
+let isReplay = false;   // Flag to track whether replay mode is active
 
 const audioPlayer = document.getElementById('audio_player');
+const replayBtn = document.getElementById('replayBtn');
 const playPauseBtn = document.getElementById('playPauseBtn');
 const coverImage = document.getElementById('cover');
 const prevBtn = document.getElementById('prevBtn');
@@ -45,8 +53,13 @@ function loadSong(songIndex) {
 // Shuffle the songs and generate a shuffle queue
 function generateShuffleQueue() {
     shuffleQueue = [...Array(songs.length).keys()];  // Create an array [0, 1, 2, ...]
+    
+    // Remove the current song index from the shuffle queue
+    shuffleQueue = shuffleQueue.filter(index => index !== currentSongIndex);
+
     shuffleQueue.sort(() => Math.random() - 0.5);    // Shuffle the array
 }
+
 
 // Get the next song index for shuffle mode
 function getNextShuffleSong() {
@@ -54,20 +67,9 @@ function getNextShuffleSong() {
         return -1;  // Return -1 when no more songs are left in the shuffle queue
     }
     currentSongIndex = shuffleQueue.shift();  // Get the next song index and remove it from queue
+    songHistory.push(currentSongIndex);       // Track played song in history
     return currentSongIndex;
 }
-
-// Update seek bar as the audio plays
-audioPlayer.addEventListener('timeupdate', () => {
-    const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
-    seekBar.value = progress || 0;
-});
-
-// Seek the song when scrubbing
-seekBar.addEventListener('input', () => {
-    const seekTo = (seekBar.value / 100) * audioPlayer.duration;
-    audioPlayer.currentTime = seekTo;
-});
 
 // Play/Pause functionality
 playPauseBtn.addEventListener('click', () => {
@@ -82,63 +84,118 @@ playPauseBtn.addEventListener('click', () => {
 
 // Play the next song
 nextBtn.addEventListener('click', () => {
+    if (isReplay) {
+        audioPlayer.currentTime = 0;
+        audioPlayer.play();
+        return;
+    }
+
     if (isShuffle) {
-        let nextSongIndex = getNextShuffleSong();
-        if (nextSongIndex === -1) {
+        if (shuffleQueue.length === 0) {
             audioPlayer.pause();
             audioPlayer.currentTime = 0;
             playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
-            return;  // Stop playing when all songs are played in shuffle
+            return;  // Stop playing when shuffleQueue is empty
         }
+        
+        // Get the next song from shuffleQueue
+        currentSongIndex = shuffleQueue.shift();  // Move to the next song in the shuffle queue
+        songHistory.push(currentSongIndex);       // Track played song in history
     } else {
-        currentSongIndex = (currentSongIndex + 1) % songs.length;
+        currentSongIndex = (currentSongIndex + 1) % songs.length;  // Normal next song
     }
     loadSong(currentSongIndex);
     audioPlayer.play();
     playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
 });
 
+
 // Play the previous song
 prevBtn.addEventListener('click', () => {
+    if (isReplay) {
+        audioPlayer.currentTime = 0;
+        audioPlayer.play();
+        return;
+    }
+
+    if (isShuffle) {
+        // If there's only one song in history, don't allow going back
+        if (songHistory.length > 1) {
+            songHistory.pop();  // Remove the current song from history
+            currentSongIndex = songHistory[songHistory.length - 1];  // Set current to the last played
+            loadSong(currentSongIndex);
+            audioPlayer.play();
+            playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+        }
+        // Do nothing if there's no song to go back to in shuffle mode
+        return;
+    }
+
+    // Regular (non-shuffle) mode: go to the previous song
     currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
     loadSong(currentSongIndex);
     audioPlayer.play();
     playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
 });
 
+
+
 // Autoplay next song when current one ends
 audioPlayer.addEventListener('ended', () => {
-    if (isShuffle) {
+    if (isReplay) {
+        audioPlayer.currentTime = 0;
+        audioPlayer.play();
+    } else if (isShuffle) {
         let nextSongIndex = getNextShuffleSong();
         if (nextSongIndex === -1) {
             audioPlayer.pause();
             audioPlayer.currentTime = 0;
             playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
-            return;  // Stop playing when all songs are played in shuffle
+            return;
         }
-    } else if (currentSongIndex < songs.length - 1) {
-        currentSongIndex++;  // Move to the next song
+        loadSong(nextSongIndex);
+        audioPlayer.play();
     } else {
-        // If it's the last song, stop the playback and reset the UI
-        audioPlayer.pause();
-        audioPlayer.currentTime = 0;
-        playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
-        return;
+        currentSongIndex = (currentSongIndex + 1) % songs.length;
+        loadSong(currentSongIndex);
+        audioPlayer.play();
     }
-    loadSong(currentSongIndex);
-    audioPlayer.play();
-    playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
 });
 
 // Toggle shuffle mode
 shuffleBtn.addEventListener('click', () => {
     isShuffle = !isShuffle;
-    shuffleBtn.classList.toggle('active', isShuffle);  // Toggle visual indication
+    shuffleBtn.classList.toggle('active', isShuffle);
     if (isShuffle) {
-        generateShuffleQueue();  // Generate shuffle queue when shuffle is activated
+        generateShuffleQueue();
+        songHistory = [currentSongIndex];  // Start shuffle history with current song
     }
     console.log('Shuffle mode:', isShuffle ? 'ON' : 'OFF');
 });
 
 // Initialize the first song
 loadSong(currentSongIndex);
+
+// Toggle replay mode
+replayBtn.addEventListener('click', () => {
+    isReplay = !isReplay;
+    replayBtn.classList.toggle('active', isReplay);
+    console.log('Replay mode:', isReplay ? 'ON' : 'OFF');
+});
+
+// Update the seekbar as the song plays
+audioPlayer.addEventListener('timeupdate', () => {
+    // Check if the song is loaded and has a duration
+    if (audioPlayer.duration) {
+        const currentTime = audioPlayer.currentTime;
+        const duration = audioPlayer.duration;
+        seekBar.value = (currentTime / duration) * 100;  // Update the seekbar
+    }
+});
+
+// Allow the user to seek the song by clicking on the seekbar
+seekBar.addEventListener('input', () => {
+    const seekTime = (seekBar.value / 100) * audioPlayer.duration;  // Calculate the new time
+    audioPlayer.currentTime = seekTime;  // Update the audio's current time
+});
+
