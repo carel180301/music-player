@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carel Music Player</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body>
+    <br>
+    <h1 id="carel_music_player">Carel's Music Player</h1>
+
+    <!-- Song List Container -->
+    <div id="songList" class="song-list"></div>
+
+    <script>
+        const songs = [
+            {
+                title: "Kiss Of Life - R.E.M",
+                file: "Music/KISS OF LIFE - REM.mp3",
+                image: "Image/kof_for rem.jpg"
+            },
+            {
+                title: "BTS - Magic Shop",
+                file: "Music/BTS - Magic Shop.mp3",
+                image: "Image/bts_for_magic shop.jpg"
+            },
+            {
+                title: "BTS - Blanket Kick",
+                file: "Music/BTS - Blanket Kick.mp3",
+                image: "Image/bts_for_blanket kick.jpg"
+            },
+            {
+                title: "Soyou & Junggigo - Some",
+                file: "Music/soyou - some.mp3",
+                image: "Image/soyou_for_some.jpg"
+            }
+        ];
+    
+        const songListContainer = document.getElementById('songList');
+        
+        // Create song items and add them to the song list container
+        songs.forEach((song, index) => {
+            const songItem = document.createElement('div');
+            songItem.classList.add('song-item');
+        
+            const playButton = document.createElement('button');
+            playButton.classList.add('play-button');
+            playButton.innerHTML = '<i class="fas fa-play"></i>';
+        
+            playButton.addEventListener('click', () => {
+                // Save the selected song data to localStorage
+                localStorage.setItem('currentSong', JSON.stringify(songs[index]));
+            
+                // Redirect to music.html
+                window.location.href = 'music.html';
+            });
+        
+            const songTitle = document.createElement('span');
+            songTitle.classList.add('song-title');
+            songTitle.textContent = song.title;
+        
+            const songDuration = document.createElement('span');
+            songDuration.classList.add('song-duration');
+            songDuration.textContent = 'Loading...';  // Placeholder until duration is loaded
+        
+            // Create an audio element to get the song duration
+            const audio = new Audio(song.file);
+            audio.addEventListener('loadedmetadata', () => {
+                songDuration.textContent = formatTime(audio.duration); // Set the actual duration
+            });
+        
+            songItem.appendChild(playButton);
+            songItem.appendChild(songTitle);
+            songItem.appendChild(songDuration);
+            songListContainer.appendChild(songItem);
+        });
+        
+        // Function to format time in MM:SS
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+    </script>
+</body>
+</html>
+
+
+
+

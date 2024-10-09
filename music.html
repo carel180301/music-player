@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carel Music Player</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body>
+    <button id="backButton" onclick="goToMainPage()"><i class="fas fa-caret-left"></i></button><br>
+
+    <div class="audio_container">
+        <h2 id="song_title" class="song-title">Song Title</h2><br>
+        <img id="cover" src="Image/qwer_for_my name is.jpg" alt="album cover" class="image"><br>
+        <audio id="audio_player" src="Music/QWER - My Name is Malguem.mp3"></audio>
+
+        <!-- Seekbar -->
+        <input type="range" id="seekbar" value="0" max="100" class="seek-bar">
+
+        <!-- Timestamp for current time and total duration -->
+        <div class="timestamp">
+            <span id="currentTime">0:00</span> / <span id="totalDuration">0:00</span>
+        </div>
+
+        <div class="controls">
+            <button id="replayBtn"><i class="fa-solid fa-repeat"></i></button>
+            <button id="prevBtn"><i class="fas fa-step-backward"></i></button>
+            <button id="playPauseBtn"><i class="fas fa-play"></i></button>
+            <button id="nextBtn"><i class="fas fa-step-forward"></i></button>
+            <button id="shuffleBtn"><i class="fa-solid fa-shuffle"></i></button>
+        </div>
+    </div>
+
+    <script src="music.js"></script>
+
+    <script>
+        function goToMainPage(){
+            window.location.href = "main.html";
+        }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedSong = localStorage.getItem('currentSong');
+            
+            // Check if there is a saved song
+            if (savedSong) {
+                const song = JSON.parse(savedSong);
+                loadSelectedSong(song);  // Load the song based on saved data
+            } else {
+                console.error("No song found in localStorage.");
+            }
+        });
+        
+        function loadSelectedSong(song) {
+            const audioPlayer = document.getElementById('audio_player');  // Old id for the audio element
+            const coverImage = document.getElementById('cover');          // Old id for the image element
+            const songTitle = document.getElementById('song_title');      // Old id for the title element
+            const playPauseBtn = document.getElementById('playPauseBtn'); // Play/pause button
+        
+            audioPlayer.src = song.file;        // Set the audio file
+            coverImage.src = song.image;        // Set the album cover
+            songTitle.textContent = song.title; // Set the song title
+        
+            audioPlayer.play();  // Automatically play the song
+            playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>'; // Set the play button icon to pause
+        }
+    </script>
+</body>
+</html>
